@@ -7,10 +7,10 @@ from random import randint
 
 
 MINIMUM_TWEETS = 30
-# QUERY = '(from:elonmusk) lang:en until:2020-01-01 since:2018-01-01'
+# Consulta para obtener tweets geolocalizados por zona
 QUERY = 'lang:es geocode:-27.4692,-58.8306,50km until:2024-08-25 since:2024-01-01'
 
-
+# definimos una funcion para obtener los tweets
 def get_tweets(tweets):
     if tweets is None:
         #* get tweets
@@ -24,27 +24,15 @@ def get_tweets(tweets):
 
     return tweets
 
-
-#* login credentials
-config = ConfigParser()
-config.read('config.ini')
-username = config['X']['username']
-email = config['X']['email']
-password = config['X']['password']
-
-#* create a csv file
-with open('tweets.csv', 'w', newline='') as file:
+# Crea un archivo csv vacio, alli cargaremos los tweets
+with open('tweets de corrientes.csv', 'w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['Tweet_count', 'Username', 'Text', 'Created At', 'Retweets', 'Likes'])
+    writer.writerow(['Cuenta_Twitter', 'Usuario', 'Texto', 'Created At', 'Retweets', 'Likes'])
 
 
 
-#* authenticate to X.com
-#! 1) use the login credentials. 2) use cookies.
+# Leemos el archivo cookies.json
 client = Client(language='en-US')
-#client.login(auth_info_1=username, auth_info_2=email, password=password)
-#client.save_cookies('cookies.json')
-
 client.load_cookies('cookies.json')
 
 # Tambien agregue esto, El resto del código permanece igual.
@@ -71,12 +59,14 @@ while tweet_count < MINIMUM_TWEETS:
     for tweet in tweets:
         tweet_count += 1
         tweet_data = [tweet_count, tweet.user.name, tweet.text, tweet.created_at, tweet.retweet_count, tweet.favorite_count]
-        
+      
+       # Esto no funciono
        # with open('tweets.csv', 'a', newline='') as file:
        #     writer = csv.writer(file)
        #     writer.writerow(tweet_data)
        #     writer.writerow(tweet_data)
-        with open('tweets.csv', 'a', newline='', encoding='utf-8') as file:
+
+        with open('tweets de corrientes.csv', 'a', newline='', encoding='utf-8') as file:
              writer = csv.writer(file)
              writer.writerow(tweet_data)
 
