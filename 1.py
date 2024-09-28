@@ -24,7 +24,7 @@ def get_tweets(tweets):
     return tweets
 
 
-#* login credentials
+# Credenciales de inicio de sesion
 config = ConfigParser()
 config.read('config.ini')
 username = config['X']['username']
@@ -38,7 +38,7 @@ with open('tweets.csv', 'w', newline='') as file:
 
 
 
-#* authenticate to X.com
+# Autenticarse en X.com
 #! 1) use the login credentials. 2) use cookies.
 client = Client(language='en-US')
 client.login(auth_info_1=username, auth_info_2=email, password=password)
