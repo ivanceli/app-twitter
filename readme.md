@@ -1,7 +1,7 @@
-# Scraping `X.com` with Twikit
+# Extraer datos de `X.com` con Twikit
 
-This code use [Twikit](https://github.com/d60/twikit) to scrape Tweet data. To run the code, use 
-`pip install “twikit==1.7.6”` to install the _twikit_ package. The latest update of _twikit_ 
-deprecated the synchronous method which is used in the code.
+Este código usa [Twikit](https://github.com/d60/twikit) para extraer datos de Tweets. Para ejecutar el código, use
+`pip install “twikit==1.7.6”` para instalar el paquete _twikit_. La última actualización de _twikit_
+dejó obsoleto el método sincrónico que se usa en el código.
 
-Check out the supplementary YouTube tutorial: https://youtu.be/6D6fVyFQD5A
+Vea el tutorial complementario de YouTube: https://youtu.be/6D6fVyFQD5A
