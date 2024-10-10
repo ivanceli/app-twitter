@@ -6,7 +6,6 @@ from random import randint
 
 MINIMUM_TWEETS = 90
 
-# Definir una función para calcular las fechas dinámicamente
 def calculate_dates(option):
     today = datetime.today()
     
@@ -28,13 +27,13 @@ print("1: Obtener tweets del último mes")
 print("2: Obtener tweets del último año")
 user_option = input("Ingrese el número de su elección: ")
 
-# Calcular las fechas y obtener el nombre del archivo según la opción del usuario
-SINCE_DATE, UNTIL_DATE, FILENAME = calculate_dates(user_option)
+# Validar la opción del usuario
+while user_option not in ['1', '2']:
+    user_option = input("Opción no válida. Por favor, ingrese 1 o 2: ")
 
-# Construir la consulta basada en la opción del usuario
+SINCE_DATE, UNTIL_DATE, FILENAME = calculate_dates(user_option)
 QUERY = f'lang:es geocode:-27.4692,-58.8306,50km until:{UNTIL_DATE} since:{SINCE_DATE}'
 
-# Definimos una función para obtener tweets
 def get_tweets(tweets):
     if tweets is None:
         print(f'{datetime.now()} - Obteniendo tweets...')
@@ -47,22 +46,17 @@ def get_tweets(tweets):
 
     return tweets
 
-# Crea un archivo CSV vacío
-with open(FILENAME, 'w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
-    writer.writerow(['Cuenta_Twitter', 'Usuario', 'Texto', 'Creado en', 'Retweets', 'Likes'])
-
-# Cargar las cookies
 client = Client(language='en-US')
 client.load_cookies('cookies.json')
 
 tweet_count = 0
 tweets = None
 
-# Abrimos el archivo CSV una vez para evitar repetir operaciones de IO
-with open(FILENAME, 'a', newline='', encoding='utf-8') as file:
+# Crear el archivo CSV y abrirlo una vez
+with open(FILENAME, 'w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file)
-    
+    writer.writerow(['Cuenta_Twitter', 'Usuario', 'Texto', 'Creado en', 'Retweets', 'Likes'])
+
     while tweet_count < MINIMUM_TWEETS:
         try:
             tweets = get_tweets(tweets)
@@ -95,4 +89,7 @@ with open(FILENAME, 'a', newline='', encoding='utf-8') as file:
 
         print(f'{datetime.now()} - Se han obtenido {tweet_count} tweets')
 
-print(f'{datetime.now()} - ¡Listo! Se han obtenido {tweet_count} tweets')
+if tweet_count < MINIMUM_TWEETS:
+    print(f'Solo se obtuvieron {tweet_count} tweets, menos del mínimo requerido de {MINIMUM_TWEETS}.')
+else:
+    print(f'{datetime.now()} - ¡Listo! Se han obtenido {tweet_count} tweets')
